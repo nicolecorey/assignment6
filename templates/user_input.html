@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grow The Flower</title>
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+  <h1>Welcome to Grow The Flower Game!</h1>
+    {% if wrong_guesses == 1 %}
+        <img src="{{ url_for('static', filename='flower1.png') }}" alt="Flower1">
+    
+  //this will continue through flower9
+  
+    {% endif %}
+  
+
+  <h2>Letters Guessed: </h2> 
+  <p>{{guessed_letters}}</p>
+  <h2>Guesses Remaining: </h2>
+  //this will be 10 - wrong_guesses
+  <p>{{wrong_guesses}}</p>
+
+    <form action="user_input" method="post">
+        <label for="user_input">Enter a Letter:</label>
+        <input type="text" name="letter" maxlength="1">
+        <button type="submit">Guess!</button>
+    </form>
+</body>
+</html>
