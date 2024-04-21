@@ -1,29 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Grow The Flower</title>
-  <link rel="stylesheet" href="static/style.css">
-</head>
-<body>
-  <h1>Welcome to Grow The Flower Game!</h1>
-    {% if wrong_guesses == 1 %}
-        <img src="{{ url_for('static', filename='flower1.png') }}" alt="Flower1">
-    
-  //this will continue through flower9
-  
-    {% endif %}
-  
+{% extends "base.html" %}
 
-  <h2>Letters Guessed: </h2> 
-  <p>{{guessed_letters}}</p>
-  <h2>Guesses Remaining: </h2>
-  //this will be 10 - wrong_guesses
-  <p>{{wrong_guesses}}</p>
+{% block content %}
 
-    <form action="user_input" method="post">
+<section class="centered">
+    <form action="/" method="POST">
         <label for="user_input">Enter a Letter:</label>
-        <input type="text" name="letter" maxlength="1">
-        <button type="submit">Guess!</button>
+        <input type="text" name="letter" id="user_input">
+        <button>Guess!</button>
     </form>
+</section>
+
+    <section class="centered">
+  {% if tries == 1 %}
+        <img src="{{ url_for('static', filename='flower9.png') }}">
+  {% elif tries == 2 %}
+        <img src="{{ url_for('static', filename='flower8.png') }}">
+  {% elif tries == 3 %}
+        <img src="{{ url_for('static', filename='flower7.png') }}">
+  {% elif tries == 4 %}
+        <img src="{{ url_for('static', filename='flower6.png') }}">
+  {% elif tries == 5 %}
+      <img src="{{ url_for('static', filename='flower5.png') }}">
+  {% elif tries == 6 %}
+      <img src="{{ url_for('static', filename='flower4.png') }}">
+  {% elif tries == 7 %}
+      <img src="{{ url_for('static', filename='flower3.png') }}">
+  {% elif tries == 8 %}
+      <img src="{{ url_for('static', filename='flower2.png') }}">
+  {% elif tries == 9 %}
+      <img src="{{ url_for('static', filename='flower1.png') }}">
+  {% elif tries == 10 %}
+      <img src="{{ url_for('static', filename='flower0.png') }}">
+    {% endif %}
+    </section>
+
+<section class="centered">
+  <h2>{{ message }}</h2>
+  <h3>Letters Guessed: {{ session['guessed_letters'] | join(', ') }}</h3>
+  <h3>Correct Letters: {{word_completion | join(' ')}}</h3>
+  <h3>Guesses Remaining: {{session['tries']}} </h3>
+
+  {% if guessed or session['tries'] <= 0 %}
+    <form action="/reset" method="POST">
+        <button type="submit">Play again!</button>
+    </form>
+  {% endif %}
+
+</section>
 </body>
 </html>
+
+{% endblock %}
