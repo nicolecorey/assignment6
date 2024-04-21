@@ -10,6 +10,8 @@
     </form>
 </section>
 
+<h2>{{ message }}</h2>
+
     <section class="centered">
   {% if tries == 1 %}
         <img src="{{ url_for('static', filename='flower9.png') }}">
@@ -35,16 +37,24 @@
     </section>
 
 <section class="centered">
-  <h2>{{ message }}</h2>
+
+
+  <h2>{{word_completion | join(' ')}}</h2>
   <h3>Letters Guessed: {{ session['guessed_letters'] | join(', ') }}</h3>
-  <h3>Correct Letters: {{word_completion | join(' ')}}</h3>
   <h3>Guesses Remaining: {{session['tries']}} </h3>
 
-  {% if guessed or session['tries'] <= 0 %}
+  {% if session['word_completion'] == word %}
+  <form action="/reset" method="POST">
+      <button type="submit">Play again!</button>
+  </form>
+  {% endif %}
+
+  {% if session['tries'] <= 0 %}
     <form action="/reset" method="POST">
         <button type="submit">Play again!</button>
     </form>
   {% endif %}
+
 
 </section>
 </body>
